@@ -27,7 +27,7 @@ url = 'http://weibo.cn/u/%d?filter=1&page=1' % user_id
 
 html = requests.get(url, cookies=cookie).content
 selector = etree.HTML(html)
-pageNum = 1
+pageNum = (int)(selector.xpath('//input[@name="mp"]')[0].attrib['value'])
 
 result = ""
 urllist_set = set()
