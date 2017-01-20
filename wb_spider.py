@@ -23,7 +23,7 @@ else:
 
 cookie = {
     "Cookie": "_T_WM=f5d5a293c5de4d66c7d3c52fd5bc177e; ALF=1487410225; SCF=AgKYWDQjkoRzF68ansAXGnup7vCW0nq8KFLM9YQ1Hq_vqxzFg86RF5VuhXXtMi3CP6GE-vGluQ24qOIIP0dssJw.; SUB=_2A251hPdtDeTxGedG71YS8S_LzjuIHXVWhpklrDV6PUJbktBeLWfckW1bLa4HG5raT71I2KplG3kUqarkJQ..; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WhaEwne.zfMm2zPgxAZiZxN5JpX5o2p5NHD95Qp1hBXe02pS0-NWs4DqcjeBPS0qPS0IgRReo5N; SUHB=0U1YF2ohMBukYR"}
-url = 'http://weibo.cn/u/%d?filter=1&page=1' % user_id
+url = 'http://weibo.cn/u/%d?page=1' % user_id
 
 html = requests.get(url, cookies=cookie).content
 selector = etree.HTML(html)
@@ -33,13 +33,13 @@ result = ""
 urllist_set = set()
 word_count = 1
 image_count = 1
-
+print pageNum
 print u'爬虫准备就绪...'
 
 for page in range(1, pageNum + 1):
 
     # 获取lxml页面
-    url = 'http://weibo.cn/u/%d?filter=1&page=%d' % (user_id, page)
+    url = 'http://weibo.cn/u/%d?page=%d' % (user_id, page)
     lxml = requests.get(url, cookies=cookie).content
     # 文字爬取
     selector = etree.HTML(lxml)
@@ -52,7 +52,7 @@ for page in range(1, pageNum + 1):
             text += "\n\n"
         result = result + text
         word_count += 1
-    time.sleep(10)
+    time.sleep(5)
 fo = open("D:/python/project/%s" % user_id, "wb")
 fo.write(result)
 word_path = os.getcwd() + '/%d' % user_id
