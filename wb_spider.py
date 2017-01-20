@@ -27,8 +27,8 @@ url = 'http://weibo.cn/u/%d?page=1' % user_id
 
 html = requests.get(url, cookies=cookie).content
 selector = etree.HTML(html)
-pageNum = (int)(selector.xpath('//input[@name="mp"]')[0].attrib['value'])
-
+# pageNum = (int)(selector.xpath('//input[@name="mp"]')[0].attrib['value'])
+pageNum = 1
 result = ""
 urllist_set = set()
 word_count = 1
@@ -44,10 +44,14 @@ for page in range(1, pageNum + 1):
     # 文字爬取
     selector = etree.HTML(lxml)
     content = selector.xpath('//span[@class="ctt"]')
+    timer = selector.xpath('//span[@class="ct"]')
     for each in content:
         text = each.xpath('string(.)')
         if word_count >= 4:
-            text = "%d :" % (word_count - 3) + text + "\n\n"
+            for each_timer in timer:
+                timer_text = each_timer.xpath('string(.)')
+                text = "%d :" % (word_count - 3) + text + timer_text + "\n\n"
+                break
         else:
             text += "\n\n"
         result = result + text
