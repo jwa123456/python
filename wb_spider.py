@@ -33,7 +33,7 @@ result = ""
 urllist_set = set()
 word_count = 1
 image_count = 1
-
+print pageNum
 print u'爬虫准备就绪...'
 
 for page in range(1, pageNum + 1):
